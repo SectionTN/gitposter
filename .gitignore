@@ -1,0 +1,5 @@
+docs/
+plans/
+.superpowers/
+node_modules/
+dist/
