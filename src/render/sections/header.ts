@@ -8,9 +8,9 @@ export function drawHeader(ctx: SKRSContext2D, data: RepoData, theme: Theme, y: 
   ctx.fillStyle = theme.surface
   ctx.fillRect(0, y, W, HEIGHT)
 
-  ctx.font = '12px "JetBrains Mono"'
+  ctx.font = '14px "JetBrains Mono"'
   ctx.fillStyle = theme.accent
-  ctx.fillText(`github.com/${data.repo.owner}/${data.repo.name}`, PAD, y + 42)
+  ctx.fillText(`github.com/${data.repo.owner}/${data.repo.name}`, PAD, y + 44)
 
   ctx.font = '600 68px Inter'
   ctx.fillStyle = theme.text
@@ -22,9 +22,9 @@ export function drawHeader(ctx: SKRSContext2D, data: RepoData, theme: Theme, y: 
   const authorCount = data.contributors.length
   const authorStr = authorCount === 1 ? '1 author' : `${authorCount} authors`
   const sub = `${dateStr}  /  ${data.stats.totalCommits} commits  /  ${authorStr}`
-  ctx.font = '12px "JetBrains Mono"'
+  ctx.font = '14px "JetBrains Mono"'
   ctx.fillStyle = theme.textMuted
-  ctx.fillText(sub, PAD, y + 152)
+  ctx.fillText(sub, PAD, y + 155)
 
   ctx.strokeStyle = theme.border
   ctx.lineWidth = 1

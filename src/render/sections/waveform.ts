@@ -14,7 +14,7 @@ export function drawWaveform(ctx: SKRSContext2D, data: RepoData, theme: Theme, y
   const barW = Math.max(2, Math.floor(totalWidth / Math.max(days.length, 1)) - 1)
   const baseY = y + 36 + BAR_AREA_H
 
-  ctx.font = '9px "JetBrains Mono"'
+  ctx.font = '12px "JetBrains Mono"'
   ctx.fillStyle = theme.textMuted
   ctx.fillText('COMMIT ACTIVITY', PAD, y + 24)
 
@@ -41,13 +41,13 @@ export function drawWaveform(ctx: SKRSContext2D, data: RepoData, theme: Theme, y
   ctx.shadowBlur = 0
 
   if (days.length > 0) {
-    ctx.font = '9px "JetBrains Mono"'
+    ctx.font = '11px "JetBrains Mono"'
     ctx.fillStyle = theme.textMuted
-    ctx.fillText(formatDateShort(days[0].date), PAD, baseY + 16)
+    ctx.fillText(formatDateShort(days[0].date), PAD, baseY + 18)
   }
   if (days.length > 2) {
-    ctx.fillText(formatDateShort(days[Math.floor(days.length / 2)].date), Math.floor(W / 2) - 20, baseY + 16)
-    ctx.fillText(formatDateShort(days[days.length - 1].date), W - 100, baseY + 16)
+    ctx.fillText(formatDateShort(days[Math.floor(days.length / 2)].date), Math.floor(W / 2) - 20, baseY + 18)
+    ctx.fillText(formatDateShort(days[days.length - 1].date), W - 100, baseY + 18)
   }
 
   ctx.strokeStyle = theme.border

@@ -17,7 +17,7 @@ export function drawFooter(ctx: SKRSContext2D, data: RepoData, theme: Theme, can
   ctx.lineTo(W, y)
   ctx.stroke()
 
-  ctx.font = '11px "JetBrains Mono"'
+  ctx.font = '14px "JetBrains Mono"'
   ctx.fillStyle = theme.textMuted
-  ctx.fillText('@sectiontn/gitposter', PAD, y + 36)
+  ctx.fillText('@sectiontn/gitposter', PAD, y + 38)
 }

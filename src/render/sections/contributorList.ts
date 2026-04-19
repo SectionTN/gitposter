@@ -16,9 +16,9 @@ export async function drawContributorList(ctx: SKRSContext2D, data: RepoData, th
   const rows = twoCols ? Math.ceil(contribs.length / 2) : contribs.length
   const HEIGHT = HEADER_H + rows * ROW_H + 24
 
-  ctx.font = '10px "JetBrains Mono"'
+  ctx.font = '13px "JetBrains Mono"'
   ctx.fillStyle = theme.textMuted
-  ctx.fillText('CONTRIBUTORS', PAD, y + 24)
+  ctx.fillText('CONTRIBUTORS', PAD, y + 26)
 
   await Promise.all(contribs.map(async (contrib, i) => {
     const col = twoCols ? i % 2 : 0
