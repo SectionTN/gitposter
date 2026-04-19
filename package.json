@@ -1,6 +1,6 @@
 {
   "name": "@sectiontn/gitposter",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Generate a beautiful printable poster from any git repository",
   "author": "Rayen Sbai <rayensbai2@gmail.com>",
   "license": "MIT",
