@@ -14,10 +14,10 @@ export function resolveInput(input: string): ResolvedInput {
   return { type: 'github', owner: input.slice(0, slashIdx), repo: input.slice(slashIdx + 1) }
 }
 
-export async function fetchRepo(input: string, token?: string): Promise<RawData> {
+export async function fetchRepo(input: string, token?: string, maxCommits?: number): Promise<RawData> {
   const resolved = resolveInput(input)
   if (resolved.type === 'github') {
-    return fetchFromGitHub(resolved.owner, resolved.repo, token)
+    return fetchFromGitHub(resolved.owner, resolved.repo, token, maxCommits)
   }
   return fetchFromLocal(resolved.path)
 }

@@ -4,20 +4,26 @@ import type { RawData, RawCommit, RawTag } from '../data/model.js'
 export async function fetchFromGitHub(
   owner: string,
   name: string,
-  token: string | undefined
+  token: string | undefined,
+  maxCommits = 5000
 ): Promise<RawData> {
   const octokit = new Octokit({ auth: token })
 
   try {
-    const [rawCommits, rawTags, langRes, contribs, repoRes] = await Promise.all([
-      octokit.paginate(octokit.rest.repos.listCommits, { owner, repo: name, per_page: 100 }),
+    const rawCommitsArr: any[] = []
+    for await (const page of octokit.paginate.iterator(octokit.rest.repos.listCommits, { owner, repo: name, per_page: 100 })) {
+      rawCommitsArr.push(...page.data)
+      if (rawCommitsArr.length >= maxCommits) break
+    }
+
+    const [rawTags, langRes, contribs, repoRes] = await Promise.all([
       octokit.paginate(octokit.rest.repos.listTags, { owner, repo: name, per_page: 100 }),
       octokit.rest.repos.listLanguages({ owner, repo: name }),
       octokit.paginate(octokit.rest.repos.listContributors, { owner, repo: name, per_page: 100 }).catch(() => []),
       octokit.rest.repos.get({ owner, repo: name }),
     ])
 
-    const commits: RawCommit[] = (rawCommits as any[]).map(c => ({
+    const commits: RawCommit[] = rawCommitsArr.map(c => ({
       sha: c.sha,
       date: new Date(c.commit.author?.date ?? c.commit.committer?.date ?? Date.now()),
       author: {

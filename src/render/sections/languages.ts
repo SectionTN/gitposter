@@ -2,11 +2,12 @@ import type { SKRSContext2D } from '@napi-rs/canvas'
 import type { RepoData, Theme } from '../../data/model.js'
 
 const PAD = 48
-const HEIGHT = 140
 
 export function drawLanguages(ctx: SKRSContext2D, data: RepoData, theme: Theme, y: number, W: number): number {
   if (data.languages.length === 0) return y
 
+  const shown = Math.min(data.languages.length, 6)
+  const HEIGHT = 56 + shown * 22 + 20
   const INNER_W = W - PAD * 2
 
   ctx.font = '9px "JetBrains Mono"'
@@ -22,7 +23,7 @@ export function drawLanguages(ctx: SKRSContext2D, data: RepoData, theme: Theme, 
   })
 
   data.languages.slice(0, 6).forEach((lang, i) => {
-    const rowY = y + 56 + i * 20
+    const rowY = y + 56 + i * 22
 
     ctx.fillStyle = lang.color
     ctx.beginPath()

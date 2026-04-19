@@ -13,10 +13,12 @@ program
   .option('--theme <theme>', 'Color theme: dark, light, minimal, colorful', 'dark')
   .option('--format <format>', 'Output format: poster (1200x1800) or square (1000x1000 for social media)', 'poster')
   .option('--all-themes', 'Generate one poster per theme')
+  .option('--max-commits <n>', 'Max commits to fetch from GitHub (default: 5000)', '5000')
   .option('--output <path>', 'Output PNG file path')
   .option('--token <token>', 'GitHub personal access token (or set GITHUB_TOKEN env var)')
-  .action(async (repoArg: string, opts: { theme: string; format: string; allThemes?: boolean; output?: string; token?: string }) => {
+  .action(async (repoArg: string, opts: { theme: string; format: string; allThemes?: boolean; maxCommits: string; output?: string; token?: string }) => {
     const token = opts.token ?? process.env.GITHUB_TOKEN
+    const maxCommits = parseInt(opts.maxCommits, 10) || 5000
 
     const format = opts.format as 'poster' | 'square'
     if (format !== 'poster' && format !== 'square') {
@@ -27,7 +29,7 @@ program
     console.log(`Fetching ${repoArg}...`)
     let raw
     try {
-      raw = await fetchRepo(repoArg, token)
+      raw = await fetchRepo(repoArg, token, maxCommits)
     } catch (err: any) {
       console.error(`Error: ${err.message}`)
       process.exit(1)
