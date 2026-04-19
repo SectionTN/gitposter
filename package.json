@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sectiontn/gitposter"
+    "url": "git+https://github.com/sectiontn/gitposter.git"
   },
   "keywords": [
     "git",
@@ -17,11 +17,12 @@
   ],
   "type": "module",
   "bin": {
-    "gitposter": "./dist/index.js"
+    "gitposter": "bin/gitposter.js"
   },
   "files": [
     "dist/",
-    "assets/fonts/"
+    "assets/fonts/",
+    "bin/"
   ],
   "engines": {
     "node": ">=18"
