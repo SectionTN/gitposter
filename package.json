@@ -1,7 +1,14 @@
 {
-  "name": "gitposter",
+  "name": "@sectiontn/gitposter",
   "version": "0.1.0",
   "description": "Generate a beautiful printable poster from any git repository",
+  "author": "Rayen Sbai <rayensbai2@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sectiontn/gitposter"
+  },
+  "keywords": ["git", "poster", "canvas", "cli", "github"],
   "type": "module",
   "bin": {
     "gitposter": "./dist/index.js"
@@ -16,6 +23,7 @@
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
+    "prepublishOnly": "npm run build",
     "test": "vitest run",
     "test:watch": "vitest"
   },
