@@ -4,10 +4,10 @@ import type { RepoData, Theme } from '../../data/model.js'
 const PAD = 48
 const HEIGHT = 140
 
-export function drawLanguages(ctx: SKRSContext2D, data: RepoData, theme: Theme, y: number): number {
+export function drawLanguages(ctx: SKRSContext2D, data: RepoData, theme: Theme, y: number, W: number): number {
   if (data.languages.length === 0) return y
 
-  const INNER_W = 1200 - PAD * 2
+  const INNER_W = W - PAD * 2
 
   ctx.font = '9px "JetBrains Mono"'
   ctx.fillStyle = theme.textMuted
@@ -35,7 +35,7 @@ export function drawLanguages(ctx: SKRSContext2D, data: RepoData, theme: Theme, 
 
     ctx.fillStyle = theme.textMuted
     ctx.textAlign = 'right'
-    ctx.fillText(`${lang.pct}%`, 1200 - PAD, rowY + 8)
+    ctx.fillText(`${lang.pct}%`, W - PAD, rowY + 8)
     ctx.textAlign = 'left'
   })
 
@@ -43,7 +43,7 @@ export function drawLanguages(ctx: SKRSContext2D, data: RepoData, theme: Theme, 
   ctx.lineWidth = 1
   ctx.beginPath()
   ctx.moveTo(0, y + HEIGHT)
-  ctx.lineTo(1200, y + HEIGHT)
+  ctx.lineTo(W, y + HEIGHT)
   ctx.stroke()
 
   return y + HEIGHT

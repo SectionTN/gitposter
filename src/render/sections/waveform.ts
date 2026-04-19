@@ -6,11 +6,11 @@ const PAD = 48
 const HEIGHT = 160
 const BAR_AREA_H = 80
 
-export function drawWaveform(ctx: SKRSContext2D, data: RepoData, theme: Theme, y: number): number {
+export function drawWaveform(ctx: SKRSContext2D, data: RepoData, theme: Theme, y: number, W: number): number {
   const days = data.commits
   const maxCount = data.stats.peakDay.count || 1
   const mileStoneDates = new Set(data.milestones.map(m => m.date.toDateString()))
-  const totalWidth = 1200 - PAD * 2
+  const totalWidth = W - PAD * 2
   const barW = Math.max(2, Math.floor(totalWidth / Math.max(days.length, 1)) - 1)
   const baseY = y + 36 + BAR_AREA_H
 
@@ -46,15 +46,15 @@ export function drawWaveform(ctx: SKRSContext2D, data: RepoData, theme: Theme, y
     ctx.fillText(formatDateShort(days[0].date), PAD, baseY + 16)
   }
   if (days.length > 2) {
-    ctx.fillText(formatDateShort(days[Math.floor(days.length / 2)].date), 580, baseY + 16)
-    ctx.fillText(formatDateShort(days[days.length - 1].date), 1100, baseY + 16)
+    ctx.fillText(formatDateShort(days[Math.floor(days.length / 2)].date), Math.floor(W / 2) - 20, baseY + 16)
+    ctx.fillText(formatDateShort(days[days.length - 1].date), W - 100, baseY + 16)
   }
 
   ctx.strokeStyle = theme.border
   ctx.lineWidth = 1
   ctx.beginPath()
   ctx.moveTo(0, y + HEIGHT)
-  ctx.lineTo(1200, y + HEIGHT)
+  ctx.lineTo(W, y + HEIGHT)
   ctx.stroke()
 
   return y + HEIGHT

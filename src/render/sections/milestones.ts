@@ -6,7 +6,7 @@ const PAD = 48
 const ROW_H = 44
 const HEADER_H = 32
 
-export function drawMilestones(ctx: SKRSContext2D, data: RepoData, theme: Theme, y: number): number {
+export function drawMilestones(ctx: SKRSContext2D, data: RepoData, theme: Theme, y: number, W: number): number {
   if (data.milestones.length === 0) return y
 
   const all = data.milestones
@@ -50,7 +50,7 @@ export function drawMilestones(ctx: SKRSContext2D, data: RepoData, theme: Theme,
   ctx.lineWidth = 1
   ctx.beginPath()
   ctx.moveTo(0, y + HEIGHT)
-  ctx.lineTo(1200, y + HEIGHT)
+  ctx.lineTo(W, y + HEIGHT)
   ctx.stroke()
 
   return y + HEIGHT

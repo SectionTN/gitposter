@@ -6,12 +6,12 @@ const ROW_H = 52
 const HEADER_H = 32
 const AVATAR_R = 20
 
-export function drawContributorList(ctx: SKRSContext2D, data: RepoData, theme: Theme, y: number): number {
+export function drawContributorList(ctx: SKRSContext2D, data: RepoData, theme: Theme, y: number, W: number): number {
   const contribs = data.contributors.slice(0, 10)
   if (contribs.length === 0) return y
 
   const twoCols = contribs.length > 4
-  const colW = twoCols ? (1200 - PAD * 2) / 2 : 1200 - PAD * 2
+  const colW = twoCols ? (W - PAD * 2) / 2 : W - PAD * 2
   const rows = twoCols ? Math.ceil(contribs.length / 2) : contribs.length
   const HEIGHT = HEADER_H + rows * ROW_H + 24
 
@@ -40,7 +40,7 @@ export function drawContributorList(ctx: SKRSContext2D, data: RepoData, theme: T
   ctx.lineWidth = 1
   ctx.beginPath()
   ctx.moveTo(0, y + HEIGHT)
-  ctx.lineTo(1200, y + HEIGHT)
+  ctx.lineTo(W, y + HEIGHT)
   ctx.stroke()
 
   return y + HEIGHT

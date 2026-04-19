@@ -11,14 +11,21 @@ program
   .description('Generate a beautiful printable poster from any git repository')
   .argument('<repo>', 'GitHub owner/repo or local path (./path, /abs/path)')
   .option('--theme <theme>', 'Color theme: dark, light, minimal, colorful', 'dark')
+  .option('--format <format>', 'Output format: poster (1200x1800) or square (1200x1200 for social media)', 'poster')
   .option('--output <path>', 'Output PNG file path')
   .option('--token <token>', 'GitHub personal access token (or set GITHUB_TOKEN env var)')
-  .action(async (repoArg: string, opts: { theme: string; output?: string; token?: string }) => {
+  .action(async (repoArg: string, opts: { theme: string; format: string; output?: string; token?: string }) => {
     const token = opts.token ?? process.env.GITHUB_TOKEN
 
     const theme = THEMES[opts.theme]
     if (!theme) {
       console.error(`Unknown theme "${opts.theme}". Available: dark, light, minimal, colorful`)
+      process.exit(1)
+    }
+
+    const format = opts.format as 'poster' | 'square'
+    if (format !== 'poster' && format !== 'square') {
+      console.error(`Unknown format "${opts.format}". Available: poster, square`)
       process.exit(1)
     }
 
@@ -33,7 +40,7 @@ program
 
     console.log(`Building poster (${raw.commits.length} commits, ${raw.contributors.length} contributors)...`)
     const data = buildRepoData(raw, theme)
-    const buf = await render(data, theme)
+    const buf = await render(data, theme, format)
 
     const outPath = opts.output ?? `${raw.name}-poster.png`
     writeFileSync(outPath, buf)

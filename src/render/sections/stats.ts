@@ -3,20 +3,20 @@ import type { RepoData, Theme } from '../../data/model.js'
 
 const HEIGHT = 120
 
-export function drawStats(ctx: SKRSContext2D, data: RepoData, theme: Theme, y: number): number {
+export function drawStats(ctx: SKRSContext2D, data: RepoData, theme: Theme, y: number, W: number): number {
   const cols = [
     { value: String(data.stats.totalCommits), label: 'COMMITS' },
     { value: String(data.dateRange.totalDays), label: 'DAYS' },
     { value: String(data.stats.totalTags), label: 'TAGS' },
     { value: String(data.stats.peakDay.count), label: 'PEAK DAY' },
   ]
-  const colW = 1200 / cols.length
+  const colW = W / cols.length
 
   ctx.strokeStyle = theme.border
   ctx.lineWidth = 1
   ctx.beginPath()
   ctx.moveTo(0, y)
-  ctx.lineTo(1200, y)
+  ctx.lineTo(W, y)
   ctx.stroke()
 
   cols.forEach((col, i) => {
@@ -44,7 +44,7 @@ export function drawStats(ctx: SKRSContext2D, data: RepoData, theme: Theme, y: n
   ctx.strokeStyle = theme.border
   ctx.beginPath()
   ctx.moveTo(0, y + HEIGHT)
-  ctx.lineTo(1200, y + HEIGHT)
+  ctx.lineTo(W, y + HEIGHT)
   ctx.stroke()
 
   return y + HEIGHT
