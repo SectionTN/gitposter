@@ -26,7 +26,7 @@ export async function render(data: RepoData, theme: Theme, format: 'poster' | 's
   if (format === 'poster') y = drawMilestones(ctx, data, theme, y, W)
   y = drawStats(ctx, data, theme, y, W)
   y = drawLanguages(ctx, data, theme, y, W)
-  y = drawContributorList(ctx, data, theme, y, W)
+  y = await drawContributorList(ctx, data, theme, y, W)
   drawFooter(ctx, data, theme, H, W)
 
   return canvas.encode('png')

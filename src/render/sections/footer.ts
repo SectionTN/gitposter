@@ -1,6 +1,7 @@
 import type { SKRSContext2D } from '@napi-rs/canvas'
 import type { RepoData, Theme } from '../../data/model.js'
 
+const PAD = 48
 const FOOTER_H = 60
 
 export function drawFooter(ctx: SKRSContext2D, data: RepoData, theme: Theme, canvasH: number, W: number): void {
@@ -15,4 +16,8 @@ export function drawFooter(ctx: SKRSContext2D, data: RepoData, theme: Theme, can
   ctx.moveTo(0, y)
   ctx.lineTo(W, y)
   ctx.stroke()
+
+  ctx.font = '11px "JetBrains Mono"'
+  ctx.fillStyle = theme.textMuted
+  ctx.fillText('@sectiontn/gitposter', PAD, y + 36)
 }

@@ -41,6 +41,7 @@ export async function fetchFromGitHub(
       tags,
       languages: (langRes as any).data as Record<string, number>,
       contributors: (contribs as any[]).map(c => ({
+        login: c.login ?? undefined,
         name: c.name ?? c.login ?? 'Unknown',
         email: c.email ?? '',
         commits: c.contributions ?? 0,

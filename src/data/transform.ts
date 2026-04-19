@@ -98,7 +98,10 @@ export function buildRepoData(raw: RawData, theme: Theme): RepoData {
     .sort((a, b) => b.commits - a.commits)
     .slice(0, 10)
     .map(c => ({
-      ...c,
+      login: c.login,
+      name: c.name,
+      email: c.email,
+      commits: c.commits,
       color: theme.contributorPalette[hashToColorIndex(c.name, theme.contributorPalette.length)],
     }))
 

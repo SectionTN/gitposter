@@ -11,17 +11,12 @@ program
   .description('Generate a beautiful printable poster from any git repository')
   .argument('<repo>', 'GitHub owner/repo or local path (./path, /abs/path)')
   .option('--theme <theme>', 'Color theme: dark, light, minimal, colorful', 'dark')
-  .option('--format <format>', 'Output format: poster (1200x1800) or square (1200x1200 for social media)', 'poster')
+  .option('--format <format>', 'Output format: poster (1200x1800) or square (1000x1000 for social media)', 'poster')
+  .option('--all-themes', 'Generate one poster per theme')
   .option('--output <path>', 'Output PNG file path')
   .option('--token <token>', 'GitHub personal access token (or set GITHUB_TOKEN env var)')
-  .action(async (repoArg: string, opts: { theme: string; format: string; output?: string; token?: string }) => {
+  .action(async (repoArg: string, opts: { theme: string; format: string; allThemes?: boolean; output?: string; token?: string }) => {
     const token = opts.token ?? process.env.GITHUB_TOKEN
-
-    const theme = THEMES[opts.theme]
-    if (!theme) {
-      console.error(`Unknown theme "${opts.theme}". Available: dark, light, minimal, colorful`)
-      process.exit(1)
-    }
 
     const format = opts.format as 'poster' | 'square'
     if (format !== 'poster' && format !== 'square') {
@@ -39,12 +34,28 @@ program
     }
 
     console.log(`Building poster (${raw.commits.length} commits, ${raw.contributors.length} contributors)...`)
-    const data = buildRepoData(raw, theme)
-    const buf = await render(data, theme, format)
 
-    const outPath = opts.output ?? `${raw.name}-poster.png`
-    writeFileSync(outPath, buf)
-    console.log(`Poster saved to ${path.resolve(outPath)}`)
+    if (opts.allThemes) {
+      for (const [themeName, themeObj] of Object.entries(THEMES)) {
+        const data = buildRepoData(raw, themeObj)
+        const buf = await render(data, themeObj, format)
+        const base = `${raw.name}-${format}`
+        const outPath = `${base}-${themeName}.png`
+        writeFileSync(outPath, buf)
+        console.log(`Saved ${path.resolve(outPath)}`)
+      }
+    } else {
+      const theme = THEMES[opts.theme]
+      if (!theme) {
+        console.error(`Unknown theme "${opts.theme}". Available: dark, light, minimal, colorful`)
+        process.exit(1)
+      }
+      const data = buildRepoData(raw, theme)
+      const buf = await render(data, theme, format)
+      const outPath = opts.output ?? `${raw.name}-${format}.png`
+      writeFileSync(outPath, buf)
+      console.log(`Poster saved to ${path.resolve(outPath)}`)
+    }
   })
 
 program.parse()

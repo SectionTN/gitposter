@@ -23,6 +23,7 @@ export interface Contributor {
   email: string
   commits: number
   color: string
+  login?: string
 }
 
 export interface Milestone {
@@ -67,6 +68,7 @@ export interface RawContributor {
   name: string
   email: string
   commits: number
+  login?: string
 }
 
 export interface RawData {
