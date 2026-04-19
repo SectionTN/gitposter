@@ -1,6 +1,6 @@
 import { program } from 'commander'
-import { writeFileSync } from 'fs'
-import path from 'path'
+import { writeFileSync } from 'node:fs'
+import path from 'node:path'
 import { fetchRepo } from './fetch/index.js'
 import { buildRepoData } from './data/transform.js'
 import { render } from './render/canvas.js'
