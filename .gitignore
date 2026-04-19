@@ -3,3 +3,5 @@ plans/
 .superpowers/
 node_modules/
 dist/
+*.png
+*.pdf
